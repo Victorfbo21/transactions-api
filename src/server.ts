@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import { config } from 'dotenv'
-import dbConnect from './Config/dbConfig.js'
+import dbConnect from './Config/dbConfig'
 import { Router, Request, Response } from 'express';
 
 config({

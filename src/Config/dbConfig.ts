@@ -10,12 +10,13 @@ const dbConnect = () => {
             authSource: 'admin',
             user: process.env.DATABASE_USER,
             pass: process.env.DATABASE_PASSWORD,
-            dbName: process.env.DATABASE_DB
-        }
+            dbName: process.env.DATABASE_DB,
+
+        },
+
     ).then(
         () => {
             console.log('Connected to', MONGO_URL)
-            console.log(process.env.DATABASE_URL)
             return true
         }
     ).catch(
