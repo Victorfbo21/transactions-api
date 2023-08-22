@@ -3,6 +3,7 @@ import cors from 'cors'
 import { config } from 'dotenv'
 import dbConnect from './Config/dbConfig'
 import { Router, Request, Response } from 'express';
+import Routers from './Routes';
 
 config({
     path: '.env'
@@ -12,12 +13,12 @@ const port = process.env.PORT
 const route = Router()
 
 app.use(express.json())
+app.use(Routers)
 app.use(cors())
+
 route.get('/', (req: Request, res: Response) => {
     res.json({ message: 'hello world with Typescript' })
 })
-
-app.use(route)
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*')
