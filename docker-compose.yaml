@@ -11,7 +11,7 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: root
       ME_CONFIG_BASICAUTH_USERNAME: admin
       ME_CONFIG_BASICAUTH_PASSWORD: admin
-      ME_CONFIG_MONGODB_URL: mongodb+srv://root:root@principalcluster.tzsnlhf.mongodb.net/?retryWrites=true&w=majority
+      ME_CONFIG_MONGODB_URL:
     networks:
       - transaction-back
 
