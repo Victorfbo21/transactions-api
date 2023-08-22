@@ -11,11 +11,11 @@ UsersRouter.put('/create', (req, res) => {
     return UsersController.insertUser(req, res)
 })
 
-UsersRouter.delete('/delete/:id', (req, res) => {
+UsersRouter.delete('/delete', (req, res) => {
     return UsersController.deleteUser(req, res)
 })
 
-UsersRouter.patch('/update/:id', (req, res) => {
+UsersRouter.patch('/update', (req, res) => {
     return UsersController.updateUser(req, res)
 })
 

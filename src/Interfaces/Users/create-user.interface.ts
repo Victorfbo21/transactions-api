@@ -2,5 +2,5 @@ export interface ICreateUser {
     userName: String,
     userEmail: String,
     userPassword: String,
-    userDocument: Number,
+    userDocument: String,
 }

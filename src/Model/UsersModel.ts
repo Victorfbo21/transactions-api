@@ -1,9 +1,10 @@
 import UserSchema from "../Schemas/usersSchema";
-import { ICreateUser } from "../Interfaces/create-user.interface";
+import { ICreateUser } from "../Interfaces/Users/create-user.interface";
 const insertUser = async (user: ICreateUser) => {
     const userCreated = new UserSchema({ ...user })
     return await userCreated.save().then(
         (o) => {
+            console.log('Usuário Salvo com Sucesso !')
             return o
         }
 
@@ -17,7 +18,7 @@ const getUsers = async (filter: string, skip: number, limit: number) => {
     filter = filter || ''
     return await UserSchema.find({
         $or: [
-            { email: new RegExp('.*' + filter + '.*', 'i') },
+            { userName: new RegExp('.*' + filter + '.*', 'i') },
 
 
         ]
@@ -48,16 +49,17 @@ const deleteUser = async (id: string) => {
 }
 
 const updateUser = async (id: string, update: Partial<ICreateUser>) => {
-    return await UserSchema.findByIdAndUpdate(id, update).then(
-        (o) => {
-            return o
-        }
-    ).catch(
-        (e) => {
-            console.log('Error on Updated User')
-        }
+    return await UserSchema.findByIdAndUpdate(id, update)
+        .then(
+            (o) => {
+                return o
+            }
+        ).catch(
+            (e) => {
+                console.log('Error on Updated User')
+            }
 
-    )
+        )
 }
 
 

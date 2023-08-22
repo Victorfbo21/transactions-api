@@ -4,3 +4,7 @@ import UsersRouter from "./UsersRoutes";
 const Routers = Router();
 
 Routers.use('/user', UsersRouter)
+
+
+
+export default Routers

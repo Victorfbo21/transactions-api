@@ -1,9 +1,10 @@
 import UserModel from '../Model/UsersModel'
-import { ICreateUser } from '../Interfaces/create-user.interface';
+import { ICreateUser } from '../Interfaces/Users/create-user.interface';
 
 const insertUser = async (req: any, res: any): Promise<any> => {
     const user = req.body;
     const created = await UserModel.insertUser(user)
+    console.log(created)
     if (created) {
         res.status(201).send(created)
     }
@@ -22,7 +23,7 @@ const getUsers = async (req: any, res: any) => {
 }
 
 const deleteUser = async (req: any, res: any) => {
-    const id = req.params.id
+    const id = req.query.id
     const userDeleted = await UserModel.deleteUser(id)
     if (userDeleted) {
         res.send(201)
@@ -33,12 +34,12 @@ const deleteUser = async (req: any, res: any) => {
 }
 
 const updateUser = async (req: any, res: any) => {
-    const id = req.params.id
+    const id = req.query.id
     const update: Partial<ICreateUser> = req.body
     const userUpdate = await UserModel.updateUser(id, update)
     if (userUpdate) {
-        res.send(201)
-        res.send(userUpdate._id)
+        res.status(201)
+        res.send(userUpdate)
     } else {
         res.send(500)
     }
