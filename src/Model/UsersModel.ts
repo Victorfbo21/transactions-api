@@ -1,10 +1,21 @@
 import UserSchema from "../Schemas/usersSchema";
 import { ICreateUser } from "../Interfaces/Users/create-user.interface";
 import encodePassword from "../Utils/encodePassword";
+import WalletSchema from "../Schemas/walletSchema";
+
+
 const insertUser = async (user: ICreateUser) => {
     const hashPassword = encodePassword(user.userPassword)
     user.userPassword = hashPassword
     const userCreated = new UserSchema({ ...user })
+
+    const walletData = {
+        owner: userCreated._id,
+        amount: 0
+    }
+    const createWallet = new WalletSchema(walletData)
+    await createWallet.save()
+
     return await userCreated.save().then(
         (o) => {
             console.log('Usuário Salvo com Sucesso !')
