@@ -1,6 +1,9 @@
 import UserSchema from "../Schemas/usersSchema";
 import { ICreateUser } from "../Interfaces/Users/create-user.interface";
+import encodePassword from "../Utils/encodePassword";
 const insertUser = async (user: ICreateUser) => {
+    const hashPassword = encodePassword(user.userPassword)
+    user.userPassword = hashPassword
     const userCreated = new UserSchema({ ...user })
     return await userCreated.save().then(
         (o) => {

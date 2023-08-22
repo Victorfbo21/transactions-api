@@ -1,10 +1,9 @@
 import UserModel from '../Model/UsersModel'
 import { ICreateUser } from '../Interfaces/Users/create-user.interface';
 
-const insertUser = async (req: any, res: any): Promise<any> => {
+const insertUser = async (req: any, res: any) => {
     const user = req.body;
     const created = await UserModel.insertUser(user)
-    console.log(created)
     if (created) {
         res.status(201).send(created)
     }
@@ -26,8 +25,8 @@ const deleteUser = async (req: any, res: any) => {
     const id = req.query.id
     const userDeleted = await UserModel.deleteUser(id)
     if (userDeleted) {
-        res.send(201)
-        res.send(userDeleted._id)
+        res.sendStatus(200)
+        res.send('Usuário :', userDeleted._id, 'Foi Deletado')
     } else {
         res.send(500)
     }
