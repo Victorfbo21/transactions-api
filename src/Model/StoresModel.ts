@@ -1,22 +1,32 @@
 import StoreSchema from "../Schemas/storeSchema";
 import encodePassword from "../Utils/encodePassword";
 import { ICreateStore } from "../Interfaces/Stores/create-store.interface";
+import WalletSchema from "../Schemas/walletSchema";
 
 const insertStore = async (store: ICreateStore) => {
     const hashPassword = encodePassword(store.storePassword)
     store.storePassword = hashPassword
     const storeCreated = new StoreSchema({ ...store })
-    return await storeCreated.save().then(
-        (o) => {
-            console.log('Loja Salva com Sucesso !')
-            return o
-        }
 
-    ).catch(
-        (e) => {
-            return e
-        }
-    )
+    const walletData = {
+        owner: storeCreated._id,
+        amount: 0
+    }
+    const createWallet = new WalletSchema(walletData)
+    await createWallet.save()
+
+    return await storeCreated.save()
+        .then(
+            (o) => {
+                console.log('Loja Salva com Sucesso !')
+                return o
+            }
+
+        ).catch(
+            (e) => {
+                return e
+            }
+        )
 }
 const getStores = async (filter: string, skip: number, limit: number) => {
     filter = filter || ''
