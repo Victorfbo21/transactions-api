@@ -1,20 +1,14 @@
-version: "3.1"
 services:
-
-  mongo-express:
-    image: mongo-express
-    restart: always
+  api-transactions:
+    container_name: api-transactions
+    image: api-transactions
+    hostname: api-transactions
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: root
-      ME_CONFIG_BASICAUTH_USERNAME: admin
-      ME_CONFIG_BASICAUTH_PASSWORD: admin
-      ME_CONFIG_MONGODB_URL:
-    networks:
-      - transaction-back
-
-networks:
-  transaction-back:
-    external: false
+      - "3080:3080"
+    volumes:
+      - ./:/src
+    restart: "unless-stopped"
+    command: npm start
