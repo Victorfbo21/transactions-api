@@ -5,7 +5,6 @@ import StoreSchema from "../Schemas/storeSchema"
 const validateTransaction = async (data: IVerifyFunds) => {
 
     const getOwner = await WalletSchema.findById({ _id: data.payer })
-    console.log(getOwner?.owner)
     const verifyIsUser = await StoreSchema.findById({ _id: getOwner?.owner })
     if (verifyIsUser) {
         throw new Error('Apenas usuários podem efeturar transações')
