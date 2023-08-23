@@ -5,7 +5,7 @@ import validateTransaction from "../Middlewares/validateTransaction";
 import { IVerifyFunds } from "../Interfaces/Transactions/verifyFunds.interface";
 import toTransaction from "../Middlewares/doTransaction";
 
-const insertTransaction = async (transaction: ICreateTransaction) => {
+const insertTransaction = async (transaction: ICreateTransaction): Promise<any> => {
     const transactionCreated = new TransactionSchema({ ...transaction })
 
     const payer = transaction.payer;
@@ -16,27 +16,15 @@ const insertTransaction = async (transaction: ICreateTransaction) => {
         value: value
     }
     const validate = await validateTransaction(data)
-    if (validate) {
-        toTransaction(transaction)
-            .then(async () => {
-                return await transactionCreated.save()
-                    .then(
-                        (o) => {
-                            console.log('Transaçao Salva com Sucesso !')
-                            return transactionCreated._id
-                        }
-
-                    ).catch(
-                        (e) => {
-                            return e
-                        }
-                    )
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-
-
+    console.log('validate', validate)
+    try {
+        if (validate) {
+            await toTransaction(transaction);
+            await transactionCreated.save();
+            return transactionCreated._id;
+        }
+    } catch (error) {
+        console.error("An error occurred:", error);
     }
 
 }

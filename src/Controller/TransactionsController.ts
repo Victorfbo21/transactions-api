@@ -1,11 +1,16 @@
-import { ICreateStore } from '../Interfaces/Stores/create-store.interface';
 import TransactionsModel from '../Model/TransactionsModel';
 import { ICreateTransaction } from '../Interfaces/Transactions/create-transaction.interface';
 
 const insertTransaction = async (req: any, res: any) => {
     const transaction = req.body;
     const created = await TransactionsModel.insertTransaction(transaction)
-    console.log(created)
+    if (created) {
+        res.status(200)
+        res.send(created)
+    }
+    else {
+        res.status(500)
+    }
 
 }
 
